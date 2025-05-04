@@ -24,17 +24,17 @@ app.post('/', async (req, res) => {
 		const uczelnie = uczelnieRes.data;
 
 		const target = badania.find(b =>
-			b.temat?.toLowerCase().includes('podróż') || b.temat?.toLowerCase().includes('czas')
+			b.nazwa?.toLowerCase().includes('czasie')
 		);
 
 		if (!target) {
 			return res.json({ output: 'Nie znaleziono badań dot. podróży w czasie' });
 		}
 
-		const uczelnia = uczelnie.find(u => u.id === target.uczelnia_id);
-		const wynik = `${target.temat}, ${uczelnia?.nazwa}, ${target.sponsor}`;
+		const uczelnia = uczelnie.find(u => u.id === target.uczelnia);
+		const wynik = `${target.nazwa}, ${uczelnia.nazwa}, ${target.sponsor}`;
 
-		res.json({ output: wynik });
+		res.json({ output: wynik});
 	} catch (err) {
 		res.status(500).json({ output: 'Błąd serwera: ' + err.message });
 	}
